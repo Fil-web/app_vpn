@@ -4,6 +4,8 @@ import os
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from dotenv import load_dotenv
+
+# Импорты из ваших модулей
 from src.database import db
 from src.handlers import user_handlers, config, payment_handlers, profile
 
@@ -21,11 +23,14 @@ bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
 def register_handlers():
+    # Команды
     dp.message.register(user_handlers.cmd_start, Command("start"))
     dp.message.register(user_handlers.cmd_help, Command("help"))
     
+    # Callback обработчики
     dp.callback_query.register(user_handlers.check_subscription, F.data == "check_subscription")
     dp.callback_query.register(user_handlers.back_to_main, F.data == "back_main")
+    dp.callback_query.register(user_handlers.back_to_plans, F.data == "back_plans")
     dp.callback_query.register(user_handlers.show_plans, F.data == "plans")
     dp.callback_query.register(user_handlers.show_apps, F.data == "apps")
     dp.callback_query.register(user_handlers.show_help, F.data == "help")
